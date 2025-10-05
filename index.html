@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio - Web Developer & Cyber Security Engineer</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starry Background (Global) */
+        canvas#stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        /* Section-Specific Starry Background */
+        .section-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Neon Text */
+        .neon-text {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+            color: #00ffff;
+        }
+
+        /* Header/Home Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), rgba(26, 26, 26, 0.8));
+        }
+
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 20px #00ffff, 0 0 40px #00cccc;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 4em;
+            margin: 10px 0;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        header p {
+            font-size: 1.5em;
+            max-width: 600px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .cta-button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #00ffff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #00cccc;
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Futuristic Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 15px 0;
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0 30px;
+            position: relative;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #00ffff;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section, footer {
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #00ffff;
+        }
+
+        .view-all {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em;
+            text-decoration: none;
+            transition: text-shadow 0.3s;
+        }
+
+        .view-all:hover {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .project-card h3 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .skill-card:hover {
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .skill-card h3 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input, textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background: #00ffff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #00cccc;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="projects.html">All Projects</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="skills.html">All Skills</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="glass">
+        <canvas id="header-stars" class="section-canvas"></canvas>
+        <img src="groot.jpeg" alt="Your Profile Image" class="profile-img">
+        <h1 class="neon-text">Stanslaus Wekesa</h1>
+        <p>Web Developer & Cyber Security Engineer crafting secure, futuristic digital solutions</p>
+        <button class="cta-button">Explore My Work</button>
+    </header>
+
+    <section id="about" class="glass">
+        <canvas id="about-stars" class="section-canvas"></canvas>
+        <h2>About Me</h2>
+        <p>I'm a passionate web developer and cyber security engineer with a knack for building secure, scalable, and visually stunning web applications. My mission is to blend cutting-edge technology with robust security practices to create digital experiences that stand out.</p>
+    </section>
+
+    <section id="projects" class="glass">
+        <canvas id="projects-stars" class="section-canvas"></canvas>
+        <h2>Projects</h2>
+        <a href="projects.html" class="view-all">View All Projects</a>
+        <div class="projects-grid">
+            <a href="https://example.com/project1" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+1" alt="Project 1">
+                <h3>Secure Web App</h3>
+                <p>A web application with advanced encryption. Built with React and Node.js.</p>
+            </a>
+            <a href="https://example.com/project2" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+2" alt="Project 2">
+                <h3>Cyber Defense Tool</h3>
+                <p>A penetration testing dashboard for network security. Built with Python.</p>
+            </a>
+            <a href="https://example.com/project3" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+3" alt="Project 3">
+                <h3>E-Commerce Platform</h3>
+                <p>A secure online store with payment integration. Built with Vue.js.</p>
+            </a>
+            <a href="https://example.com/project4" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+4" alt="Project 4">
+                <h3>Portfolio Website</h3>
+                <p>A dynamic portfolio with futuristic design. Built with HTML, CSS, JS.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="skills" class="glass">
+        <canvas id="skills-stars" class="section-canvas"></canvas>
+        <h2>Skills</h2>
+        <a href="skills.html" class="view-all">View All Skills</a>
+        <div class="skills-grid">
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="skill-card">
+                <h3>HTML5 & CSS3</h3>
+                <p>Building responsive and visually appealing web interfaces with modern standards.</p>
+            </a>
+            <a href="https://react.dev/" class="skill-card">
+                <h3>JavaScript & React</h3>
+                <p>Creating dynamic, interactive applications with React and vanilla JS.</p>
+            </a>
+            <a href="https://nodejs.org/" class="skill-card">
+                <h3>Node.js</h3>
+                <p>Developing scalable backend systems with Node.js and Express.</p>
+            </a>
+            <a href="https://owasp.org/" class="skill-card">
+                <h3>Cyber Security</h3>
+                <p>Implementing encryption, secure APIs, and penetration testing.</p>
+            </a>
+            <a href="https://www.kali.org/docs/tools/" class="skill-card">
+                <h3>Penetration Testing</h3>
+                <p>Identifying vulnerabilities and securing systems against attacks.</p>
+            </a>
+            <a href="https://www.python.org/" class="skill-card">
+                <h3>Python</h3>
+                <p>Automating security tasks and building backend scripts.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="contact" class="glass">
+        <canvas id="contact-stars" class="section-canvas"></canvas>
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <canvas id="footer-stars" class="section-canvas"></canvas>
+        <p>&copy; 2025 Your Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize EmailJS
+        emailjs.init('YOUR_USER_ID'); // Replace with your EmailJS User ID
+
+        // Starry Background Animation (Global and Section-Specific)
+        const canvases = [
+            { id: 'stars', element: document.getElementById('stars'), isGlobal: true },
+            { id: 'header-stars', element: document.getElementById('header-stars') },
+            { id: 'about-stars', element: document.getElementById('about-stars') },
+            { id: 'projects-stars', element: document.getElementById('projects-stars') },
+            { id: 'skills-stars', element: document.getElementById('skills-stars') },
+            { id: 'contact-stars', element: document.getElementById('contact-stars') },
+            { id: 'footer-stars', element: document.getElementById('footer-stars') }
+        ];
+
+        canvases.forEach(canvas => {
+            if (canvas.element) {
+                const ctx = canvas.element.getContext('2d');
+                if (!canvas.isGlobal) {
+                    canvas.element.width = canvas.element.parentElement.offsetWidth;
+                    canvas.element.height = canvas.element.parentElement.offsetHeight;
+                } else {
+                    canvas.element.width = window.innerWidth;
+                    canvas.element.height = window.innerHeight;
+                }
+
+                canvas.stars = [];
+                const colors = ['0, 255, 255', '255, 255, 255', '255, 0, 255'];
+                for (let i = 0; i < 100; i++) {
+                    canvas.stars.push({
+                        x: Math.random() * canvas.element.width,
+                        y: Math.random() * canvas.element.height,
+                        radius: Math.random() * 2 + 0.5,
+                        alpha: Math.random() * 0.5 + 0.5,
+                        speed: Math.random() * 1 + 0.5,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        twinkleSpeed: Math.random() * 0.05 + 0.02
+                    });
+                }
+
+                canvas.animate = () => {
+                    ctx.clearRect(0, 0, canvas.element.width, canvas.element.height);
+                    canvas.stars.forEach(star => {
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(${star.color}, ${star.alpha})`;
+                        ctx.fill();
+                        star.y += star.speed;
+                        star.alpha += Math.sin(Date.now() * star.twinkleSpeed) * 0.1;
+                        if (star.y > canvas.element.height) star.y = 0;
+                        if (star.alpha > 1) star.alpha = 1;
+                        if (star.alpha < 0.3) star.alpha = 0.3;
+                    });
+                };
+            }
+        });
+
+        function animateAllStars() {
+            canvases.forEach(canvas => {
+                if (canvas.element) canvas.animate();
+            });
+            requestAnimationFrame(animateAllStars);
+        }
+
+        window.addEventListener('resize', () => {
+            canvases.forEach(canvas => {
+                if (canvas.element) {
+                    if (canvas.isGlobal) {
+                        canvas.element.width = window.innerWidth;
+                        canvas.element.height = window.innerHeight;
+                    } else {
+                        canvas.element.width = canvas.element.parentElement.offsetWidth;
+                        canvas.element.height = canvas.element.parentElement.offsetHeight;
+                    }
+                    canvas.stars.forEach(star => {
+                        star.x = Math.random() * canvas.element.width;
+                        star.y = Math.random() * canvas.element.height;
+                    });
+                }
+            });
+        });
+
+        animateAllStars();
+
+        // Card Tilt Effect (Mouse and Touch)
+        const cards = document.querySelectorAll('.project-card, .skill-card');
+        cards.forEach(card => {
+            const handleMove = (e) => {
+                e.preventDefault(); // Prevent link navigation during tilt
+                const rect = card.getBoundingClientRect();
+                let x, y;
+                if (e.type === 'mousemove') {
+                    x = e.clientX - rect.left;
+                    y = e.clientY - rect.top;
+                } else if (e.type === 'touchmove') {
+                    x = e.touches[0].clientX - rect.left;
+                    y = e.touches[0].clientY - rect.top;
+                }
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const maxTilt = 10;
+
+                const tiltX = (centerY - y) / centerY * maxTilt;
+                const tiltY = (x - centerX) / centerX * maxTilt;
+
+                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-10px)`;
+                card.style.boxShadow = `0 0 20px rgba(0, 255, 255, ${0.5 + Math.abs(tiltX / maxTilt) * 0.3})`;
+            };
+
+            card.addEventListener('mousemove', handleMove);
+            card.addEventListener('touchmove', handleMove, { passive: true });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0)';
+                card.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0)';
+            });
+
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0)';
+                card.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0)';
+            });
+        });
+
+        // EmailJS Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                from_name: name,
+                from_email: email,
+                message: message
+            })
+            .then(() => {
+                alert('Message sent successfully!');
+                this.reset();
+            }, (error) => {
+                alert('Failed to send message. Please try again.');
+                console.error('EmailJS error:', error);
+            });
+        });
+
+        // CTA Button Scroll to Projects
+        document.querySelector('.cta-button').addEventListener('click', () => {
+            document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

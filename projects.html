@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects - Your Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starry Background (Global) */
+        canvas#stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        /* Section-Specific Starry Background */
+        .section-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Neon Text */
+        .neon-text {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
+            color: #00ffff;
+        }
+
+        /* Futuristic Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 15px 0;
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0 30px;
+            position: relative;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #00ffff;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Projects Section */
+        section {
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 40px;
+            color: #00ffff;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .project-card h3 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    <nav>
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="projects.html" class="active">All Projects</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="skills.html">All Skills</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="glass">
+        <canvas id="projects-stars" class="section-canvas"></canvas>
+        <h1 class="neon-text">All Projects</h1>
+        <div class="projects-grid">
+            <a href="https://example.com/project1" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+1" alt="Project 1">
+                <h3>Secure Web App</h3>
+                <p>A web application with advanced encryption. Built with React and Node.js.</p>
+            </a>
+            <a href="https://example.com/project2" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+2" alt="Project 2">
+                <h3>Cyber Defense Tool</h3>
+                <p>A penetration testing dashboard for network security. Built with Python.</p>
+            </a>
+            <a href="https://example.com/project3" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+3" alt="Project 3">
+                <h3>E-Commerce Platform</h3>
+                <p>A secure online store with payment integration. Built with Vue.js.</p>
+            </a>
+            <a href="https://example.com/project4" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+4" alt="Project 4">
+                <h3>Portfolio Website</h3>
+                <p>A dynamic portfolio with futuristic design. Built with HTML, CSS, JS.</p>
+            </a>
+            <a href="https://example.com/project5" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+5" alt="Project 5">
+                <h3>AI Chatbot</h3>
+                <p>An intelligent chatbot for customer support. Built with Python and TensorFlow.</p>
+            </a>
+            <a href="https://example.com/project6" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+6" alt="Project 6">
+                <h3>Blockchain Wallet</h3>
+                <p>A secure cryptocurrency wallet. Built with Solidity and Web3.js.</p>
+            </a>
+            <a href="https://example.com/project7" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+7" alt="Project 7">
+                <h3>Task Manager</h3>
+                <p>A productivity app for task organization. Built with Angular and Firebase.</p>
+            </a>
+            <a href="https://example.com/project8" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+8" alt="Project 8">
+                <h3>Network Scanner</h3>
+                <p>A tool for network vulnerability scanning. Built with Python and Scapy.</p>
+            </a>
+            <a href="https://example.com/project9" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+9" alt="Project 9">
+                <h3>Social Media App</h3>
+                <p>A social platform with secure messaging. Built with Django and PostgreSQL.</p>
+            </a>
+            <a href="https://example.com/project10" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+10" alt="Project 10">
+                <h3>IoT Dashboard</h3>
+                <p>A dashboard for IoT device monitoring. Built with Node.js and MQTT.</p>
+            </a>
+            <a href="https://example.com/project11" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+11" alt="Project 11">
+                <h3>Password Manager</h3>
+                <p>A secure password storage app. Built with JavaScript and AES encryption.</p>
+            </a>
+            <a href="https://example.com/project12" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+12" alt="Project 12">
+                <h3>Inventory System</h3>
+                <p>A system for managing stock. Built with Laravel and MySQL.</p>
+            </a>
+            <a href="https://example.com/project13" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+13" alt="Project 13">
+                <h3>AR App</h3>
+                <p>An augmented reality experience. Built with Unity and AR.js.</p>
+            </a>
+            <a href="https://example.com/project14" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+14" alt="Project 14">
+                <h3>Firewall Configurator</h3>
+                <p>A tool for firewall rule management. Built with Python and Bash.</p>
+            </a>
+            <a href="https://example.com/project15" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+15" alt="Project 15">
+                <h3>Blog Platform</h3>
+                <p>A customizable blogging platform. Built with WordPress and PHP.</p>
+            </a>
+            <a href="https://example.com/project16" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+16" alt="Project 16">
+                <h3>Data Visualizer</h3>
+                <p>A tool for visualizing datasets. Built with D3.js and Python.</p>
+            </a>
+            <a href="https://example.com/project17" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+17" alt="Project 17">
+                <h3>Chat App</h3>
+                <p>A real-time chat application. Built with Socket.io and Node.js.</p>
+            </a>
+            <a href="https://example.com/project18" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+18" alt="Project 18">
+                <h3>Machine Learning API</h3>
+                <p>An API for ML predictions. Built with Flask and TensorFlow.</p>
+            </a>
+            <a href="https://example.com/project19" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+19" alt="Project 19">
+                <h3>Event Planner</h3>
+                <p>An app for organizing events. Built with React Native and Firebase.</p>
+            </a>
+            <a href="https://example.com/project20" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+20" alt="Project 20">
+                <h3>Code Editor</h3>
+                <p>An online code editor with live preview. Built with Monaco Editor and JavaScript.</p>
+            </a>
+            <a href="https://example.com/project21" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+21" alt="Project 21">
+                <h3>Security Monitor</h3>
+                <p>A tool for real-time security monitoring. Built with Python and Prometheus.</p>
+            </a>
+            <a href="https://example.com/project22" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+22" alt="Project 22">
+                <h3>E-Learning Platform</h3>
+                <p>An online learning management system. Built with Moodle and PHP.</p>
+            </a>
+            <a href="https://example.com/project23" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+23" alt="Project 23">
+                <h3>Game Engine</h3>
+                <p>A 2D game engine prototype. Built with Godot and GDScript.</p>
+            </a>
+            <a href="https://example.com/project24" class="project-card">
+                <img src="https://via.placeholder.com/300x200?text=Project+24" alt="Project 24">
+                <h3>API Gateway</h3>
+                <p>A secure API gateway for microservices. Built with Express and Redis.</p>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <canvas id="footer-stars" class="section-canvas"></canvas>
+        <p>&copy; 2025 Your Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Starry Background Animation (Global and Section-Specific)
+        const canvases = [
+            { id: 'stars', element: document.getElementById('stars'), isGlobal: true },
+            { id: 'projects-stars', element: document.getElementById('projects-stars') },
+            { id: 'footer-stars', element: document.getElementById('footer-stars') }
+        ];
+
+        canvases.forEach(canvas => {
+            if (canvas.element) {
+                const ctx = canvas.element.getContext('2d');
+                if (!canvas.isGlobal) {
+                    canvas.element.width = canvas.element.parentElement.offsetWidth;
+                    canvas.element.height = canvas.element.parentElement.offsetHeight;
+                } else {
+                    canvas.element.width = window.innerWidth;
+                    canvas.element.height = window.innerHeight;
+                }
+
+                canvas.stars = [];
+                const colors = ['0, 255, 255', '255, 255, 255', '255, 0, 255'];
+                for (let i = 0; i < 100; i++) {
+                    canvas.stars.push({
+                        x: Math.random() * canvas.element.width,
+                        y: Math.random() * canvas.element.height,
+                        radius: Math.random() * 2 + 0.5,
+                        alpha: Math.random() * 0.5 + 0.5,
+                        speed: Math.random() * 1 + 0.5,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        twinkleSpeed: Math.random() * 0.05 + 0.02
+                    });
+                }
+
+                canvas.animate = () => {
+                    ctx.clearRect(0, 0, canvas.element.width, canvas.element.height);
+                    canvas.stars.forEach(star => {
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(${star.color}, ${star.alpha})`;
+                        ctx.fill();
+                        star.y += star.speed;
+                        star.alpha += Math.sin(Date.now() * star.twinkleSpeed) * 0.1;
+                        if (star.y > canvas.element.height) star.y = 0;
+                        if (star.alpha > 1) star.alpha = 1;
+                        if (star.alpha < 0.3) star.alpha = 0.3;
+                    });
+                };
+            }
+        });
+
+        function animateAllStars() {
+            canvases.forEach(canvas => {
+                if (canvas.element) canvas.animate();
+            });
+            requestAnimationFrame(animateAllStars);
+        }
+
+        window.addEventListener('resize', () => {
+            canvases.forEach(canvas => {
+                if (canvas.element) {
+                    if (canvas.isGlobal) {
+                        canvas.element.width = window.innerWidth;
+                        canvas.element.height = window.innerHeight;
+                    } else {
+                        canvas.element.width = canvas.element.parentElement.offsetWidth;
+                        canvas.element.height = canvas.element.parentElement.offsetHeight;
+                    }
+                    canvas.stars.forEach(star => {
+                        star.x = Math.random() * canvas.element.width;
+                        star.y = Math.random() * canvas.element.height;
+                    });
+                }
+            });
+        });
+
+        animateAllStars();
+
+        // Card Tilt Effect (Mouse and Touch)
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+            const handleMove = (e) => {
+                e.preventDefault(); // Prevent link navigation during tilt
+                const rect = card.getBoundingClientRect();
+                let x, y;
+                if (e.type === 'mousemove') {
+                    x = e.clientX - rect.left;
+                    y = e.clientY - rect.top;
+                } else if (e.type === 'touchmove') {
+                    x = e.touches[0].clientX - rect.left;
+                    y = e.touches[0].clientY - rect.top;
+                }
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const maxTilt = 10;
+
+                const tiltX = (centerY - y) / centerY * maxTilt;
+                const tiltY = (x - centerX) / centerX * maxTilt;
+
+                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-10px)`;
+                card.style.boxShadow = `0 0 20px rgba(0, 255, 255, ${0.5 + Math.abs(tiltX / maxTilt) * 0.3})`;
+            };
+
+            card.addEventListener('mousemove', handleMove);
+            card.addEventListener('touchmove', handleMove, { passive: true });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0)';
+                card.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0)';
+            });
+
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0)';
+                card.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0)';
+            });
+        });
+    </script>
+</body>
+</html>
